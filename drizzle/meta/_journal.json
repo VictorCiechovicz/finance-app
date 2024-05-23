@@ -1,0 +1,20 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1716426152800,
+      "tag": "0000_tough_justice",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1716427175868,
+      "tag": "0001_skinny_tana_nile",
+      "breakpoints": true
+    }
+  ]
+}
