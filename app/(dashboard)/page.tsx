@@ -1,5 +1,8 @@
-import { UserButton } from '@clerk/nextjs'
+'use client'
+
+import { useNewAccount } from '@/hooks/useNewAccounts'
 
 export default function Home() {
-  return <div>dashboard</div>
+  const { onOpen } = useNewAccount()
+  return <div onClick={onOpen}>dashboard</div>
 }
