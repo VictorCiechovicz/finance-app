@@ -1,10 +1,16 @@
+import { useForm } from 'react-hook-form'
 import { insertAccountsSchema } from '@/db/schema'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Form, FormControl, FormField, FormItem, FormLabel } from './ui/form'
-import { useForm } from 'react-hook-form'
-import { Input } from './ui/input'
-import { Button } from './ui/button'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
 import { Trash } from 'lucide-react'
 
 const formSchema = insertAccountsSchema.pick({
