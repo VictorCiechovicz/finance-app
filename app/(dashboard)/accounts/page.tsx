@@ -7,12 +7,16 @@ import { Loader2, Plus } from 'lucide-react'
 import { columns } from './columns'
 import { DataTable } from '@/components/DataTable'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useDeleteAccounts } from '@/app/features/accounts/api/use-delete-accounts'
 
 export default function AccountsPage() {
   const newAccount = useNewAccount()
   const queryAccounts = useGetAccounts()
+  const deleteAccounts = useDeleteAccounts()
 
-  if (queryAccounts.isLoading) {
+  const isDisabled = queryAccounts.isLoading || deleteAccounts.isPending
+
+  if (isDisabled) {
     return (
       <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
         <Card className="border-none drop-shadow-sm">
@@ -43,7 +47,11 @@ export default function AccountsPage() {
             filterKey="email"
             columns={columns}
             data={queryAccounts.data || []}
-            onDelete={() => {}}
+            onDelete={row => {
+              const ids = row.map(r => r.original.id)
+              deleteAccounts.mutate({ ids })
+            }}
+            disabled={isDisabled}
           />
         </CardContent>
       </Card>

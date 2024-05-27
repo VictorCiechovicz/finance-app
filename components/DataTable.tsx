@@ -21,7 +21,7 @@ import {
   TableHead,
   TableHeader,
   TableRow
-} from 'ç'
+} from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Trash } from 'lucide-react'
@@ -79,6 +79,10 @@ export function DataTable<TData, TValue>({
             variant="outline"
             className="ml-auto font-normal text-sm"
             disabled={disabled}
+            onClick={() => {
+              onDelete(table.getFilteredSelectedRowModel().rows)
+              table.setRowSelection({})
+            }}
           >
             <Trash className="size-4 mr-2" />
             Delete ({table.getFilteredSelectedRowModel().rows.length})
