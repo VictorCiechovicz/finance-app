@@ -25,6 +25,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Trash } from 'lucide-react'
+import { ConfirmModal } from './ConfirmModal'
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -44,6 +45,7 @@ export function DataTable<TData, TValue>({
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [rowSelection, setRowSelection] = useState({})
+  const [openModalConfirm, setOpenModalConfirm] = useState(false)
 
   const table = useReactTable({
     data,
@@ -62,8 +64,20 @@ export function DataTable<TData, TValue>({
     }
   })
 
+  const handleDelete = () => {
+    onDelete(table.getFilteredSelectedRowModel().rows)
+    table.setRowSelection({})
+    setOpenModalConfirm(false)
+  }
   return (
     <div>
+      <ConfirmModal
+        title="Are you sure?"
+        description="You are about perform a bulk delete"
+        openModalConfirm={openModalConfirm}
+        setOpenModalConfirm={setOpenModalConfirm}
+        handleDelete={handleDelete}
+      />
       <div className="flex items-center py-4">
         <Input
           placeholder={`Filter ${filterKey}...`}
@@ -80,8 +94,7 @@ export function DataTable<TData, TValue>({
             className="ml-auto font-normal text-sm"
             disabled={disabled}
             onClick={() => {
-              onDelete(table.getFilteredSelectedRowModel().rows)
-              table.setRowSelection({})
+              setOpenModalConfirm(true)
             }}
           >
             <Trash className="size-4 mr-2" />
