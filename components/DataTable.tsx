@@ -76,7 +76,7 @@ export function DataTable<TData, TValue>({
         description="You are about perform a bulk delete"
         openModalConfirm={openModalConfirm}
         setOpenModalConfirm={setOpenModalConfirm}
-        handleDelete={handleDelete}
+        handleSubmit={handleDelete}
       />
       <div className="flex items-center py-4">
         <Input

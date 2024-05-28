@@ -15,14 +15,14 @@ interface ConfirmModalProps {
   description: string
   openModalConfirm: boolean
   setOpenModalConfirm: (value: boolean) => void
-  handleDelete: () => void
+  handleSubmit: () => void
 }
 export function ConfirmModal({
   title,
   description,
   openModalConfirm,
   setOpenModalConfirm,
-  handleDelete
+  handleSubmit
 }: ConfirmModalProps) {
   return (
     <Dialog open={openModalConfirm} onOpenChange={setOpenModalConfirm}>
@@ -39,7 +39,7 @@ export function ConfirmModal({
           >
             Cancel
           </Button>
-          <Button variant="default" onClick={handleDelete}>
+          <Button variant="default" onClick={handleSubmit}>
             Confirm
           </Button>
         </DialogFooter>
