@@ -26,8 +26,10 @@ export const NewAccountSheet = () => {
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent className="space-y-4">
         <SheetHeader>
-          <SheetTitle>Title</SheetTitle>
-          <SheetDescription>Description</SheetDescription>
+          <SheetTitle>New Account</SheetTitle>
+          <SheetDescription>
+            Create a new account to track your transactions
+          </SheetDescription>
         </SheetHeader>
         <FormAccount
           onSubmit={onSubmit}

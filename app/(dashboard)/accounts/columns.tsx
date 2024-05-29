@@ -1,16 +1,74 @@
 'use client'
 
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { ColumnDef } from '@tanstack/react-table'
-import { ArrowUpDown } from 'lucide-react'
+import { ArrowUpDown, Edit, MoreHorizontal, Trash } from 'lucide-react'
 import { Checkbox } from '@/components/ui/checkbox'
 import { InferResponseType } from 'hono'
 import { client } from '@/lib/hono'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu'
+import { useOpenAccount } from '@/hooks/useOpenAccount'
+import { ConfirmModal } from '@/components/ConfirmModal'
+import { useDeleteAccount } from '@/app/features/accounts/api/use-delete-account'
 
 export type ResponseType = InferResponseType<
   typeof client.api.accounts.$get,
   200
 >['data'][0]
+
+type ActionsProps = {
+  id: string
+}
+const Actions = ({ id }: ActionsProps) => {
+  const [openModalConfirm, setOpenModalConfirm] = useState(false)
+
+  const { onOpen } = useOpenAccount()
+  const deleteMutation = useDeleteAccount(id)
+
+  const handleDelete = async () => {
+    await deleteMutation.mutate()
+    setOpenModalConfirm(false)
+  }
+
+  return (
+    <>
+      <ConfirmModal
+        title="Are you sure?"
+        description="You are about perform a bulk delete"
+        openModalConfirm={openModalConfirm}
+        setOpenModalConfirm={setOpenModalConfirm}
+        handleSubmit={handleDelete}
+      />
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="size-8 p-0">
+            <MoreHorizontal className="size-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-56">
+          <DropdownMenuItem disabled={false} onClick={() => onOpen(id)}>
+            <Edit className="size-4 mr-2" />
+            Edit
+          </DropdownMenuItem>
+
+          <DropdownMenuItem
+            disabled={false}
+            onClick={() => setOpenModalConfirm(true)}
+          >
+            <Trash className="size-4 mr-2" />
+            Delete
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
+  )
+}
 
 export const columns: ColumnDef<ResponseType>[] = [
   {
@@ -48,5 +106,9 @@ export const columns: ColumnDef<ResponseType>[] = [
         </Button>
       )
     }
+  },
+  {
+    id: 'actions',
+    cell: ({ row }) => <Actions id={row.original.id} />
   }
 ]
