@@ -15,6 +15,13 @@
       "when": 1716427175868,
       "tag": "0001_skinny_tana_nile",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1717193409097,
+      "tag": "0002_melted_lake",
+      "breakpoints": true
     }
   ]
 }
