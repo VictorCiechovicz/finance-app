@@ -5,7 +5,7 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle
-} from './ui/sheet'
+} from '../../ui/sheet'
 import { FormAccount, FormValues } from './AccountForm'
 import { useCreateAccounts } from '@/app/features/accounts/api/use-create-accounts'
 

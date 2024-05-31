@@ -6,14 +6,14 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle
-} from './ui/sheet'
+} from '../../ui/sheet'
 import { FormAccount, FormValues } from './AccountForm'
 import { useOpenAccount } from '@/hooks/useOpenAccount'
 import { useGetAccount } from '@/app/features/accounts/api/use-get-account'
 import { Loader2 } from 'lucide-react'
 import { useEditAccounts } from '@/app/features/accounts/api/use-edit-accounts'
 import { useDeleteAccount } from '@/app/features/accounts/api/use-delete-account'
-import { ConfirmModal } from './ConfirmModal'
+import { ConfirmModal } from '../../ConfirmModal'
 import { useState } from 'react'
 
 export const EditAccountSheet = () => {
