@@ -1,20 +1,20 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { useNewAccount } from '@/hooks/useNewAccounts'
-import { useGetAccounts } from '@/app/features/accounts/api/use-get-accounts'
+import { useNewCategory } from '@/hooks/useNewCategory'
+import { useGetCategories } from '@/app/features/categories/api/use-get-categories'
 import { Loader2, Plus } from 'lucide-react'
 import { columns } from './columns'
 import { DataTable } from '@/components/DataTable'
 import { Skeleton } from '@/components/ui/skeleton'
-import { useDeleteAccounts } from '@/app/features/accounts/api/use-delete-accounts'
+import { useDeleteCategories } from '@/app/features/categories/api/use-delete-categories'
 
 export default function CategoriesPage() {
-  const newAccount = useNewAccount()
-  const queryAccounts = useGetAccounts()
-  const deleteAccounts = useDeleteAccounts()
+  const newCategory = useNewCategory()
+  const queryCategories = useGetCategories()
+  const deleteCategories = useDeleteCategories()
 
-  const isDisabled = queryAccounts.isLoading || deleteAccounts.isPending
+  const isDisabled = queryCategories.isLoading || deleteCategories.isPending
 
   if (isDisabled) {
     return (
@@ -39,19 +39,19 @@ export default function CategoriesPage() {
           <CardTitle className="text-xl line-clamp-1">
             Categories Page
           </CardTitle>
-          <Button size="sm" onClick={newAccount.onOpen}>
+          <Button size="sm" onClick={newCategory.onOpen}>
             <Plus className="size-4 mr-2" />
             Add new
           </Button>
         </CardHeader>
         <CardContent>
           <DataTable
-            filterKey="email"
+            filterKey="name"
             columns={columns}
-            data={queryAccounts.data || []}
+            data={queryCategories.data || []}
             onDelete={row => {
               const ids = row.map(r => r.original.id)
-              deleteAccounts.mutate({ ids })
+              deleteCategories.mutate({ ids })
             }}
             disabled={isDisabled}
           />

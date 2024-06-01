@@ -16,7 +16,7 @@ import { useDeleteCategory } from '@/app/features/categories/api/use-delete-cate
 import { ConfirmModal } from '../../ConfirmModal'
 import { useState } from 'react'
 
-export const EditAccountSheet = () => {
+export const EditCategorySheet = () => {
   const [openModalConfirm, setOpenModalConfirm] = useState(false)
 
   const { isOpen, onClose, id } = useOpenCategory()
@@ -52,7 +52,7 @@ export const EditAccountSheet = () => {
     <>
       <ConfirmModal
         title="Are you sure?"
-        description="You are about perform a bulk delete"
+        description="You are about to delete this category"
         openModalConfirm={openModalConfirm}
         setOpenModalConfirm={setOpenModalConfirm}
         handleSubmit={handleDelete}

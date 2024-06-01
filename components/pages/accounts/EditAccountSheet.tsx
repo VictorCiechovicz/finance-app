@@ -52,7 +52,7 @@ export const EditAccountSheet = () => {
     <>
       <ConfirmModal
         title="Are you sure?"
-        description="You are about perform a bulk delete"
+        description="You are about to delete this account"
         openModalConfirm={openModalConfirm}
         setOpenModalConfirm={setOpenModalConfirm}
         handleSubmit={handleDelete}

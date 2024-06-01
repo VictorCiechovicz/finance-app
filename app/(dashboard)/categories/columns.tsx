@@ -13,12 +13,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import { useOpenAccount } from '@/hooks/useOpenAccount'
+import { useOpenCategory } from '@/hooks/useOpenCategory'
 import { ConfirmModal } from '@/components/ConfirmModal'
-import { useDeleteAccount } from '@/app/features/accounts/api/use-delete-account'
+import { useDeleteCategory } from '@/app/features/categories/api/use-delete-category'
 
 export type ResponseType = InferResponseType<
-  typeof client.api.accounts.$get,
+  typeof client.api.categories.$get,
   200
 >['data'][0]
 
@@ -28,8 +28,8 @@ type ActionsProps = {
 const Actions = ({ id }: ActionsProps) => {
   const [openModalConfirm, setOpenModalConfirm] = useState(false)
 
-  const { onOpen } = useOpenAccount()
-  const deleteMutation = useDeleteAccount(id)
+  const { onOpen } = useOpenCategory()
+  const deleteMutation = useDeleteCategory(id)
 
   const handleDelete = async () => {
     await deleteMutation.mutate()
@@ -40,7 +40,7 @@ const Actions = ({ id }: ActionsProps) => {
     <>
       <ConfirmModal
         title="Are you sure?"
-        description="You are about perform a bulk delete"
+        description="You are about to delete this category"
         openModalConfirm={openModalConfirm}
         setOpenModalConfirm={setOpenModalConfirm}
         handleSubmit={handleDelete}

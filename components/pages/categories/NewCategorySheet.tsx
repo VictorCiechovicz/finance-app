@@ -9,7 +9,7 @@ import {
 import { FormCategory, FormValues } from './CategoriesForm'
 import { useCreateCategories } from '@/app/features/categories/api/use-create-categories'
 
-export const NewAccountSheet = () => {
+export const NewCategorySheet = () => {
   const { isOpen, onClose } = useNewCategory()
   const mutation = useCreateCategories()
 
