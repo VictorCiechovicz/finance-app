@@ -5,29 +5,29 @@ import { InferResponseType } from 'hono'
 import { toast } from 'sonner'
 
 type ResponseType = InferResponseType<
-  (typeof client.api.accounts)[':id']['$patch']
+  (typeof client.api.transactions)['transactions-delete']['$post']
 >
 type RequestType = InferRequestType<
-  (typeof client.api.accounts)[':id']['$patch']
+  (typeof client.api.transactions)['transactions-delete']['$post']
 >['json']
 
-export const useEditAccounts = (id?: string) => {
+export const useDeleteTransactions = () => {
   const queryClient = useQueryClient()
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async json => {
-      const response = await client.api.accounts[':id']['$patch']({
-        json,
-        param: { id }
+      const response = await client.api.transactions['transactions-delete'][
+        '$post'
+      ]({
+        json
       })
       return await response.json()
     },
     onSuccess: () => {
-      toast.success('Update Account.')
-      queryClient.invalidateQueries({ queryKey: ['account', { id }] })
-      queryClient.invalidateQueries({ queryKey: ['accounts'] })
+      toast.success('Delete transaction.')
+      queryClient.invalidateQueries({ queryKey: ['transactions'] })
     },
     onError: () => {
-      toast.error('Failed to edit Account!')
+      toast.error('Failed to delete transaction!')
     }
   })
   return mutation

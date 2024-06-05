@@ -134,7 +134,7 @@ const app = new Hono()
     }
   )
   .post(
-    '/categories-delete',
+    '/transactions-delete',
     clerkMiddleware(),
     zValidator(
       'json',
