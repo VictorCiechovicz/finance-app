@@ -12,6 +12,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Trash } from 'lucide-react'
+import { Select } from '@/components/Select'
 
 const formSchema = z.object({
   date: z.coerce.date(),
@@ -58,7 +59,7 @@ export const FormTransaction = ({
   })
 
   const handleSubmit = (value: FormValues) => {
-    onSubmit(value)
+    //onSubmit(value)
   }
 
   const handleDelete = () => {
@@ -72,16 +73,39 @@ export const FormTransaction = ({
         className="space-y-4 pt-4"
       >
         <FormField
-          name="name"
+          name="accountId"
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>Account</FormLabel>
               <FormControl>
-                <Input
+                <Select
+                  placeholder="Select an account"
+                  options={accountOptions}
+                  onCreate={onCreateAccount}
+                  value={field.value}
+                  onChange={field.onChange}
                   disabled={disabled}
-                  placeholder="e.g Cash, Bank, Credit Card"
-                  {...field}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          name="categoryId"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Category</FormLabel>
+              <FormControl>
+                <Select
+                  placeholder="Select an category"
+                  options={categoryOptions}
+                  onCreate={onCreateCategory}
+                  value={field.value}
+                  onChange={field.onChange}
+                  disabled={disabled}
                 />
               </FormControl>
             </FormItem>

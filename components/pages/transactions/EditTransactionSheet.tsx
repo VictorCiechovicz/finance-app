@@ -7,7 +7,7 @@ import {
   SheetHeader,
   SheetTitle
 } from '../../ui/sheet'
-import { FormAccount, FormValues } from './AccountForm'
+import { FormTransaction, FormValues } from './TransactionForm'
 import { useOpenAccount } from '@/hooks/useOpenAccount'
 import { useGetAccount } from '@/app/features/accounts/api/use-get-account'
 import { Loader2 } from 'lucide-react'
@@ -28,11 +28,11 @@ export const EditTransactionSheet = () => {
   const isPending = editMutation.isPending || deleteMutation.isPending
 
   const onSubmit = (value: FormValues) => {
-    editMutation.mutate(value, {
+    /*  editMutation.mutate(value, {
       onSuccess: () => {
         onClose()
       }
-    })
+    }) */
   }
 
   const handleDelete = async () => {
@@ -68,13 +68,7 @@ export const EditTransactionSheet = () => {
               <Loader2 className="size-4 text-muted-foreground animate-spin" />
             </div>
           ) : (
-            <FormAccount
-              id={id}
-              onSubmit={onSubmit}
-              onDelete={() => setOpenModalConfirm(true)}
-              disabled={isPending}
-              defaultValues={defaultValues}
-            />
+            <div></div>
           )}
         </SheetContent>
       </Sheet>

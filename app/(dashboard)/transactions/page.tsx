@@ -12,9 +12,9 @@ import { useDeleteTransactions } from '@/app/features/transactions/api/use-delet
 export default function TransactionsPage() {
   const newTransaction = useNewTransaction()
   const queryTransactions = useGetTransactions()
-  const deleteAccounts = useDeleteTransactions()
+  const deleteTransactions = useDeleteTransactions()
 
-  const isDisabled = queryTransactions.isLoading || deleteAccounts.isPending
+  const isDisabled = queryTransactions.isLoading || deleteTransactions.isPending
 
   if (isDisabled) {
     return (
@@ -51,7 +51,7 @@ export default function TransactionsPage() {
             data={queryTransactions.data || []}
             onDelete={row => {
               const ids = row.map(r => r.original.id)
-              deleteAccounts.mutate({ ids })
+              deleteTransactions.mutate({ ids })
             }}
             disabled={isDisabled}
           />
