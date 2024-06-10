@@ -19,6 +19,7 @@ import { useDeleteAccount } from '@/app/features/accounts/api/use-delete-account
 import { format } from 'date-fns'
 import { formatCurrency } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
+import { useOpenCategory } from '@/hooks/useOpenCategory'
 
 export type ResponseType = InferResponseType<
   typeof client.api.transactions.$get,
@@ -28,6 +29,16 @@ export type ResponseType = InferResponseType<
 type ActionsProps = {
   id: string
 }
+type AccountColumnProps = {
+  account: string
+  accountId: string
+}
+
+type CategoryColumnProps = {
+  category: string | null
+  categoryId: string
+}
+
 const Actions = ({ id }: ActionsProps) => {
   const [openModalConfirm, setOpenModalConfirm] = useState(false)
 
@@ -70,6 +81,38 @@ const Actions = ({ id }: ActionsProps) => {
         </DropdownMenuContent>
       </DropdownMenu>
     </>
+  )
+}
+
+const AccountColumn = ({ account, accountId }: AccountColumnProps) => {
+  const { onOpen } = useOpenAccount()
+
+  const onClick = () => {
+    onOpen(accountId)
+  }
+  return (
+    <div
+      onClick={onClick}
+      className="flex items-center cursor-pointer hover:underline"
+    >
+      {account}
+    </div>
+  )
+}
+
+const CategoryColumn = ({ category, categoryId }: CategoryColumnProps) => {
+  const { onOpen } = useOpenCategory()
+
+  const onClick = () => {
+    onOpen(categoryId)
+  }
+  return (
+    <div
+      onClick={onClick}
+      className="flex items-center cursor-pointer hover:underline"
+    >
+      {category}
+    </div>
   )
 }
 
@@ -127,9 +170,12 @@ export const columns: ColumnDef<ResponseType>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => {
-      return <span>{row.original.category}</span>
-    }
+    cell: ({ row }) => (
+      <CategoryColumn
+        category={row.original.category}
+        categoryId={row.original.categoryId}
+      />
+    )
   },
   {
     accessorKey: 'payee',
@@ -184,9 +230,12 @@ export const columns: ColumnDef<ResponseType>[] = [
         </Button>
       )
     },
-    cell: ({ row }) => {
-      return <span>{row.original.account}</span>
-    }
+    cell: ({ row }) => (
+      <AccountColumn
+        account={row.original.account}
+        accountId={row.original.accountId}
+      />
+    )
   },
 
   {
