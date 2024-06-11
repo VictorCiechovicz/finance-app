@@ -63,6 +63,7 @@ export const EditCategorySheet = () => {
             <SheetTitle>Edit Category</SheetTitle>
             <SheetDescription>Edit an existing category</SheetDescription>
           </SheetHeader>
+
           {isLoading ? (
             <div className="absolute inset-0 flex items-center justify-center">
               <Loader2 className="size-4 text-muted-foreground animate-spin" />
