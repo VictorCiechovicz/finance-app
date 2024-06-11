@@ -11,6 +11,7 @@ import { useNewTransaction } from '@/hooks/useNewTransaction'
 import { useGetTransactions } from '@/app/features/transactions/api/use-get-transactions'
 import { useDeleteTransactions } from '@/app/features/transactions/api/use-delete-transactions'
 import { UploadButton } from '@/components/pages/transactions/UploadButton'
+import { ImportCard } from '@/components/pages/transactions/ImportCard'
 
 enum VARIANTS {
   LIST = 'LIST',
@@ -23,12 +24,23 @@ const INITIAL_IMPORT_RESULTS = {
 }
 export default function TransactionsPage() {
   const [variants, setVariants] = useState<VARIANTS>(VARIANTS.LIST)
+  const [importResults, setImportResults] = useState(INITIAL_IMPORT_RESULTS)
 
   const newTransaction = useNewTransaction()
   const queryTransactions = useGetTransactions()
   const deleteTransactions = useDeleteTransactions()
 
   const isDisabled = queryTransactions.isLoading || deleteTransactions.isPending
+
+  const onUpload = (results: typeof INITIAL_IMPORT_RESULTS) => {
+    setImportResults(results)
+    setVariants(VARIANTS.IMPORT)
+  }
+
+  const onCancelImport = () => {
+    setImportResults(INITIAL_IMPORT_RESULTS)
+    setVariants(VARIANTS.LIST)
+  }
 
   if (isDisabled) {
     return (
@@ -49,7 +61,11 @@ export default function TransactionsPage() {
   if (variants === VARIANTS.IMPORT) {
     return (
       <>
-        <div>This is a screen import </div>
+        <ImportCard
+          data={importResults.data}
+          onSubmit={() => {}}
+          onCancel={onCancelImport}
+        />
       </>
     )
   }
@@ -65,7 +81,7 @@ export default function TransactionsPage() {
               <Plus className="size-4 mr-2" />
               Add new
             </Button>
-            <UploadButton onOpload={() => {}} />
+            <UploadButton onOpload={onUpload} />
           </div>
         </CardHeader>
         <CardContent>

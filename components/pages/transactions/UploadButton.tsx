@@ -7,7 +7,7 @@ type Props = { onOpload: (results: any) => void }
 export const UploadButton = ({ onOpload }: Props) => {
   const { CSVReader } = useCSVReader()
   return (
-    <CSVReader>
+    <CSVReader onUploadAccepted={onOpload}>
       {({ getRootProps }: any) => (
         <Button size="sm" className="w-full lg:w-auto" {...getRootProps()}>
           <Upload className="size-4 mr-2" />
