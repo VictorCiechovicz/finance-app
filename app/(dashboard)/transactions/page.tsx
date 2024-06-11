@@ -1,4 +1,6 @@
 'use client'
+
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Loader2, Plus } from 'lucide-react'
@@ -8,8 +10,20 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useNewTransaction } from '@/hooks/useNewTransaction'
 import { useGetTransactions } from '@/app/features/transactions/api/use-get-transactions'
 import { useDeleteTransactions } from '@/app/features/transactions/api/use-delete-transactions'
+import { UploadButton } from '@/components/pages/transactions/UploadButton'
 
+enum VARIANTS {
+  LIST = 'LIST',
+  IMPORT = 'IMPORT'
+}
+const INITIAL_IMPORT_RESULTS = {
+  data: [],
+  errors: [],
+  meta: {}
+}
 export default function TransactionsPage() {
+  const [variants, setVariants] = useState<VARIANTS>(VARIANTS.LIST)
+
   const newTransaction = useNewTransaction()
   const queryTransactions = useGetTransactions()
   const deleteTransactions = useDeleteTransactions()
@@ -32,6 +46,13 @@ export default function TransactionsPage() {
       </div>
     )
   }
+  if (variants === VARIANTS.IMPORT) {
+    return (
+      <>
+        <div>This is a screen import </div>
+      </>
+    )
+  }
   return (
     <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
       <Card className="border-none drop-shadow-sm">
@@ -39,10 +60,13 @@ export default function TransactionsPage() {
           <CardTitle className="text-xl line-clamp-1">
             Transactions History
           </CardTitle>
-          <Button size="sm" onClick={newTransaction.onOpen}>
-            <Plus className="size-4 mr-2" />
-            Add new
-          </Button>
+          <div className="flex items-center gap-x-2">
+            <Button size="sm" onClick={newTransaction.onOpen}>
+              <Plus className="size-4 mr-2" />
+              Add new
+            </Button>
+            <UploadButton onOpload={() => {}} />
+          </div>
         </CardHeader>
         <CardContent>
           <DataTable
