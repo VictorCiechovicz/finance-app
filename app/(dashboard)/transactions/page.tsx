@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Loader2, Plus } from 'lucide-react'
@@ -12,6 +13,9 @@ import { useGetTransactions } from '@/app/features/transactions/api/use-get-tran
 import { useDeleteTransactions } from '@/app/features/transactions/api/use-delete-transactions'
 import { UploadButton } from '@/components/pages/transactions/UploadButton'
 import { ImportCard } from '@/components/pages/transactions/ImportCard'
+import { transactions } from '@/db/schema'
+import { useSelectAccount } from '@/hooks/useSelectAccount'
+import { useCreateTransactions } from '@/app/features/transactions/api/use-create-transactions'
 
 enum VARIANTS {
   LIST = 'LIST',
@@ -29,8 +33,30 @@ export default function TransactionsPage() {
   const newTransaction = useNewTransaction()
   const queryTransactions = useGetTransactions()
   const deleteTransactions = useDeleteTransactions()
+  const createTransactions = useCreateTransactions()
+  const [AccountDialog, confirm] = useSelectAccount()
 
   const isDisabled = queryTransactions.isLoading || deleteTransactions.isPending
+
+  const onSubmitImport = async (
+    values: (typeof transactions.$inferInsert)[]
+  ) => {
+    const accountId = await confirm()
+    if (!accountId) {
+      return toast.error('Please select account to continue.')
+    }
+
+    const data = values.map(value => ({
+      ...value,
+      accountId: accountId as string
+    }))
+
+    createTransactions.mutate(data, {
+      onSuccess: () => {
+        onCancelImport()
+      }
+    })
+  }
 
   const onUpload = (results: typeof INITIAL_IMPORT_RESULTS) => {
     setImportResults(results)
@@ -61,10 +87,11 @@ export default function TransactionsPage() {
   if (variants === VARIANTS.IMPORT) {
     return (
       <>
+        <AccountDialog />
         <ImportCard
           data={importResults.data}
-          onSubmit={() => {}}
           onCancel={onCancelImport}
+          onSubmit={onSubmitImport}
         />
       </>
     )
