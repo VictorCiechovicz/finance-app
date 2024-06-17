@@ -35,7 +35,7 @@ export default function TransactionsPage() {
   const deleteTransactions = useDeleteTransactions()
   const createTransactions = useCreateTransactions()
   const [AccountDialog, confirm] = useSelectAccount()
-
+  console.log(queryTransactions.data)
   const isDisabled = queryTransactions.isLoading || deleteTransactions.isPending
 
   const onSubmitImport = async (
