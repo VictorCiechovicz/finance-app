@@ -21,3 +21,11 @@ export function formatCurrency(value: number) {
     minimumFractionDigits: 2
   }).format(finalValue)
 }
+
+export function calculcatePercentChange(current: number, previuos: number) {
+  if (previuos === 0) {
+    return previuos === current ? 0 : 100
+  }
+
+  return ((current - previuos) / previuos) * 100
+}

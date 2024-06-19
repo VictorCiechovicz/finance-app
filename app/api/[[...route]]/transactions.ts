@@ -16,7 +16,6 @@ import { parse, subDays } from 'date-fns'
 const app = new Hono()
   .get(
     '/',
-
     zValidator(
       'query',
       z.object({
