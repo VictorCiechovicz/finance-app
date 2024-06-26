@@ -6,7 +6,8 @@ import {
   AreaChartIcon,
   BarChart2Icon,
   FileSearch,
-  LineChartIcon
+  LineChartIcon,
+  Loader2
 } from 'lucide-react'
 import { AreaVariant } from './dataVariant'
 import { BarVariant } from './barVariant'
@@ -18,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
+import { Skeleton } from '@/components/ui/skeleton'
 
 type Props = {
   data?: {
@@ -77,6 +79,20 @@ export const Chart = ({ data = [] }: Props) => {
             {chartType === 'line' && <LineVariant data={data} />}
           </>
         )}
+      </CardContent>
+    </Card>
+  )
+}
+
+export const ChartLoading = () => {
+  return (
+    <Card className="border-none drop-shadow-sm">
+      <CardHeader className="flex space-y-2 lg:space-y-0 lg:flex-row lg:items-center justify-between">
+        <Skeleton className="h-8 w-48" />
+        <Skeleton className="h-8 lg:w-[120px] w-full" />
+      </CardHeader>
+      <CardContent className="h-[350px] flex items-center justify-center">
+        <Loader2 className="h-6 w-6 text-slate-300 animate-spin" />
       </CardContent>
     </Card>
   )

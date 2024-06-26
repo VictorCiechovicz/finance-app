@@ -7,6 +7,7 @@ import {
   BarChart2Icon,
   FileSearch,
   LineChartIcon,
+  Loader2,
   PieChart,
   Radar,
   Target
@@ -24,6 +25,7 @@ import {
 import { PieVariant } from './pieVariant'
 import { RadarVariant } from './radarVariant'
 import { RadialVariant } from './radialVariant'
+import { Skeleton } from '@/components/ui/skeleton'
 
 type Props = {
   data?: {
@@ -82,6 +84,20 @@ export const SpendingPie = ({ data = [] }: Props) => {
             {chartType === 'radial' && <RadialVariant data={data} />}
           </>
         )}
+      </CardContent>
+    </Card>
+  )
+}
+
+export const SpendingPieLoading = () => {
+  return (
+    <Card className="border-none drop-shadow-sm">
+      <CardHeader className="flex space-y-2 lg:space-y-0 lg:flex-row lg:items-center justify-between">
+        <Skeleton className="h-8 w-48" />
+        <Skeleton className="h-8 lg:w-[120px] w-full" />
+      </CardHeader>
+      <CardContent className="h-[350px] flex items-center justify-center">
+        <Loader2 className="h-6 w-6 text-slate-300 animate-spin" />
       </CardContent>
     </Card>
   )
