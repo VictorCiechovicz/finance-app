@@ -36,7 +36,7 @@ type AccountColumnProps = {
 
 type CategoryColumnProps = {
   category: string | null
-  categoryId: string
+  categoryId: string | null
 }
 
 const Actions = ({ id }: ActionsProps) => {
@@ -104,7 +104,7 @@ const CategoryColumn = ({ category, categoryId }: CategoryColumnProps) => {
   const { onOpen } = useOpenCategory()
 
   const onClick = () => {
-    onOpen(categoryId)
+    if (categoryId) onOpen(categoryId)
   }
   return (
     <div
