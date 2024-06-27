@@ -23,10 +23,6 @@ const routes = [
   {
     href: '/categories',
     label: 'Categories'
-  },
-  {
-    href: '/setting',
-    label: 'Setting'
   }
 ]
 
