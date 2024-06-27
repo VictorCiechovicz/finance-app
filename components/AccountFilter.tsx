@@ -1,6 +1,7 @@
 'use client'
 
 import { useGetAccounts } from '@/app/features/accounts/api/use-get-accounts'
+import { useGetSummary } from '@/app/features/summary/api/use-get-summary'
 import {
   Select,
   SelectContent,
@@ -19,7 +20,7 @@ export const AccountFilter = () => {
   const from = params.get('from') || ''
   const to = params.get('to') || ''
   const { data: accounts, isLoading: isLoadingAccounts } = useGetAccounts()
-
+  const { isLoading: isLoadingSummary } = useGetSummary()
   const onChange = (newValue: string) => {
     const query = {
       accountId: newValue,
@@ -44,7 +45,7 @@ export const AccountFilter = () => {
     <Select
       value={accountId}
       onValueChange={onChange}
-      disabled={isLoadingAccounts}
+      disabled={isLoadingAccounts || isLoadingSummary}
     >
       <SelectTrigger className="lg:w-auto w-full h-9 rounded-md bg-white/10 hover:bg-white/20 hover:text-white border-none focus:ring-offset-0 focus:ring-transparent outline-none text-white focus:bg-white/30 transition">
         <SelectValue placeholder="Select account" />
